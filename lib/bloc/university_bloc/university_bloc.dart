@@ -22,17 +22,17 @@ class UniversityBloc extends Bloc<UniversityEvent, UniversityState> {
   _onUniversityDetails(
       UniversityDetailsEvent event, Emitter<UniversityState> emit) async {
     emit(UniversityLoading());
-    try {
-      http.Response data = await universityService.universityService();
-      if (data.statusCode == 200) {
+    final data = await universityService.universityService();
+    data.fold((l) {
+      emit(UniversityError(l.errorMessage));
+    }, (r) {
+      if (r.statusCode == 200) {
         final universityModel = List<UniversityModel>.from(
-            json.decode(data.body).map((x) => UniversityModel.fromJson(x)));
+            json.decode(r.body).map((x) => UniversityModel.fromJson(x)));
         emit(UniversityLoaded(universityModel));
       } else {
         emit(UniversityError("Something went wrong"));
       }
-    } catch (e) {
-      emit(UniversityError(e.toString()));
-    }
+    });
   }
 }
