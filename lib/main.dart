@@ -1,4 +1,5 @@
 import 'package:bloc_practice/bloc/university_bloc/university_bloc.dart';
+import 'package:bloc_practice/pages/either_type_error_page.dart';
 import 'package:bloc_practice/pages/my_home_page.dart';
 import 'package:bloc_practice/services/university_service.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +25,11 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: const MyHomePage(),
+        initialRoute: MyHomePage.myHomePage,
+        routes: {
+          MyHomePage.myHomePage: (context) => MyHomePage(),
+          EitherTypeErrorPage.eitherTypeErrorPage: (context) => EitherTypeErrorPage(),
+        },
       ),
     );
   }

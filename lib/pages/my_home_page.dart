@@ -1,9 +1,13 @@
 import 'package:bloc_practice/bloc/university_bloc/university_bloc.dart';
+import 'package:bloc_practice/pages/either_type_error_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
+
+  static const String myHomePage = 'myHomePage';
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -30,6 +34,19 @@ class _MyHomePageState extends State<MyHomePage> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(
+                        context, EitherTypeErrorPage.eitherTypeErrorPage);
+                  },
+                  child: Text(
+                    'Check Either Type Error',
+                    style: GoogleFonts.poppins(
+                        fontSize: 14, fontWeight: FontWeight.w400),
+                  )),
+              const SizedBox(
+                height: 10,
+              ),
               BlocBuilder<UniversityBloc, UniversityState>(
                   builder: (context, universityState) {
                 if (universityState is UniversityLoading) {
@@ -56,7 +73,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 }
 
                 return Container();
-              })
+              }),
             ],
           ),
         ),
